@@ -6,6 +6,7 @@
             自建文件共享服务，通过 SakuraFrp 和 IPv6 + 非标准端口提供多线路访问。
         </div>
         <div class="project-tags">
+            <span class="tag">SakuraFrp</span>
             <span class="tag">IPv6</span>
             <span class="tag">自托管</span>
             <span class="tag">多线路</span>
@@ -14,7 +15,7 @@
         <div id="lineStatusList" class="line-status-list">
             <div style="color:#6f8fae; text-align:center; padding:0.5rem;">加载中…</div>
         </div>
-        <a href="https://drive.awa486.top" class="project-link" target="_blank">选择线路 →</a>
+        <a href="https://drive.awa486.top" class="project-link" target="_blank">主线路 →</a>
     </div>
 
     <!-- 状态监控 API 卡片 -->
@@ -39,7 +40,7 @@
         <div class="project-tags">
             <span class="tag">HTML/JS</span>
             <span class="tag">图表</span>
-            <span class="tag">已启用</span>
+            <span class="tag">状态监测</span>
         </div>
         <a href="https://intro.awa486.top/status" class="project-link" target="_blank">查看看板 →</a>
     </div>
@@ -48,7 +49,7 @@
     <div class="project-card">
         <div class="project-title">Gemini 中转 API</div>
         <div class="project-desc">
-            基于 <a href="https://github.com/bilibilimnb/openai-gemini" target="_blank" style="color:#2c6e9e;">openai-gemini</a> 部署在 Cloudflare Workers，提供 OpenAI 格式的 Gemini API 代理。<br>
+            基于 <a href="https://github.com/PublicAffairs/openai-gemini" target="_blank" style="color:#2c6e9e;">openai-gemini</a> 部署在 Cloudflare Workers，利用 Cloudflare 全球网络提供 OpenAI 格式的 Gemini API 代理。<br>
             配合 <strong>Chatbox</strong> 客户端即可轻松使用。
         </div>
         <div class="project-tags">
@@ -63,9 +64,90 @@
                 <li>设置 → 选择“OpenAI API”类型</li>
                 <li>API 地址填入：<code style="background:#eef3fc; padding:0.1rem 0.3rem; border-radius:4px;">https://gemini.awa486.top/v1</code></li>
                 <li>API 密钥填入你的 <a href="https://aistudio.google.com/apikey" target="_blank" style="color:#2c6e9e;">Google AI Studio 密钥</a></li>
-                <li>选择模型（如 gemini-2.0-flash-exp）开始聊天</li>
+                <li>选择模型（如 gemini-3.1-pro-preview）开始聊天</li>
             </ol>
         </div>
-        <a href="https://github.com/bilibilimnb/openai-gemini" class="project-link" target="_blank">查看源码 →</a>
+        <a href="https://github.com/bilibilimnb/openai-gemini" class="project-link" target="_blank">查看该部署版本源码 →</a>
     </div>
 </div>
+
+<script>
+    const lineMapping = {
+        'drive.awa486.top': {
+            name: 'SakuraFrp',
+            url: 'https://drive.awa486.top'
+        },
+        'v6.awa486.top': {
+            name: '中国大陆IPv6',
+            url: 'https://v6.awa486.top:10721'
+        }
+    };
+
+    // 带超时和重试的 fetch
+    async function fetchWithTimeout(url, timeout = 8000) {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+        try {
+            const response = await fetch(url, { signal: controller.signal });
+            clearTimeout(id);
+            return response;
+        } catch (err) {
+            clearTimeout(id);
+            throw err;
+        }
+    }
+
+    async function fetchAndUpdateLines(retryCount = 0) {
+        const container = document.getElementById('lineStatusList');
+        if (!container) return;
+
+        // 最多重试 2 次
+        const MAX_RETRIES = 2;
+        try {
+            const res = await fetchWithTimeout('https://status.awa486.top/status', 6000);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+
+            const lines = data.filter(site => lineMapping[site.name]);
+            if (lines.length === 0) {
+                container.innerHTML = '<div style="color:#6f8fae; text-align:center; padding:0.5rem;">暂无线路状态数据</div>';
+                return;
+            }
+
+            const linesHtml = lines.map(site => {
+                const online = site.online === true;
+                const statusClass = online ? 'online' : 'offline';
+                const statusText = online ? '在线' : '离线';
+                const rt = site.responseTime !== undefined ? `${site.responseTime}ms` : '—';
+                const line = lineMapping[site.name];
+                return `
+                    <div class="line-item">
+                        <div class="line-name">
+                            <span class="line-dot ${statusClass}"></span>
+                            <span class="line-status-text ${statusClass === 'online' ? 'line-online' : 'line-offline'}">${line.name}</span>
+                        </div>
+                        <div class="line-time">
+                            ${statusText} · ${rt}
+                        </div>
+                        <a href="${line.url}" target="_blank" style="font-size:0.7rem; color:#2c6e9e; text-decoration:none;">访问 →</a>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = linesHtml;
+        } catch (err) {
+            console.error('获取线路状态失败:', err);
+            // 重试机制
+            if (retryCount < MAX_RETRIES) {
+                console.log(`第 ${retryCount + 1} 次重试...`);
+                setTimeout(() => fetchAndUpdateLines(retryCount + 1), 2000);
+                return;
+            }
+            container.innerHTML = '<div style="color:#b84c3c; text-align:center; padding:0.5rem;">状态服务暂不可用，请稍后刷新</div>';
+        }
+    }
+
+    // 页面加载后立即获取，之后每 60 秒刷新一次
+    fetchAndUpdateLines();
+    setInterval(() => fetchAndUpdateLines(), 60000);
+</script>
