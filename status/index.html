@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenList 状态看板</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>OpenList · 状态看板</h1>
+        <p>实时监控服务健康度 | 最近24小时在线趋势</p>
+    </div>
+
+    <div class="toolbar">
+        <div class="auto-refresh-info">⏱ 自动刷新 60 秒</div>
+        <button class="refresh-btn" id="manualRefresh">⟳ 手动刷新</button>
+    </div>
+
+    <div class="status-card" id="statusContainer">
+        <div class="loading">加载中…</div>
+    </div>
+
+    <div class="chart-section" id="chartSection" style="display: none;">
+        <div class="chart-title">📈 响应时间趋势 (最近24小时)</div>
+        <div class="chart-container">
+            <canvas id="rtChart"></canvas>
+        </div>
+        <div class="chart-title">✅ 在线率趋势</div>
+        <div class="chart-container">
+            <canvas id="onlineChart"></canvas>
+        </div>
+    </div>
+
+    <div class="footer">
+        📡 数据来自 Cloudflare Worker | 无紫色渐变 · 极简呈现
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
