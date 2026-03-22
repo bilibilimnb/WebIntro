@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>推gal好累 · 个人主页</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="header-placeholder"></div>
+        <div id="profile-placeholder"></div>
+        <h2 class="section-title">项目 · 作品</h2>
+        <div id="projects-placeholder"></div>
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <script src="parts/openlist-status.js"></script>
+    <script>
+        async function loadPart(selector, file) {
+            try {
+                const res = await fetch(file);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const html = await res.text();
+                document.querySelector(selector).innerHTML = html;
+            } catch (err) {
+                console.error(`加载 ${file} 失败:`, err);
+            }
+        }
+
+        loadPart('#header-placeholder', 'parts/header.html');
+        loadPart('#profile-placeholder', 'parts/profile.html');
+        loadPart('#projects-placeholder', 'parts/projects.html');
+        loadPart('#footer-placeholder', 'parts/footer.html');
+    </script>
+</body>
+</html>

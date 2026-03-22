@@ -1,0 +1,68 @@
+<div class="projects-grid">
+    <!-- OpenList 卡片 -->
+    <div class="project-card">
+        <div class="project-title">OpenList</div>
+        <div class="project-desc">
+            自建服务聚合入口，用游戏台式 PC 部署，通过 IPv6 + 非标端口提供多线路访问。
+        </div>
+        <div class="project-tags">
+            <span class="tag">IPv6</span>
+            <span class="tag">自托管</span>
+            <span class="tag">多线路</span>
+        </div>
+        <!-- 线路状态列表容器 -->
+        <div id="lineStatusList" class="line-status-list">
+            <div style="color:#6f8fae; text-align:center; padding:0.5rem;">加载中…</div>
+        </div>
+        <a href="https://drive.awa486.top" class="project-link" target="_blank">选择线路 →</a>
+    </div>
+
+    <!-- 状态监控 API 卡片 -->
+    <div class="project-card">
+        <div class="project-title">状态监控 API</div>
+        <div class="project-desc">Cloudflare Workers + KV 构建的服务状态底座，为 status.awa486.top 提供数据接口。</div>
+        <div class="project-tags">
+            <span class="tag">Worker</span>
+            <span class="tag">KV</span>
+            <span class="tag">REST API</span>
+        </div>
+        <a href="https://status.awa486.top/status" class="project-link" target="_blank">查看 API →</a>
+    </div>
+
+    <!-- 状态看板（待部署）卡片 -->
+    <div class="project-card">
+        <div class="project-title">状态看板（待部署）</div>
+        <div class="project-desc">调用 status.awa486.top/status，展示服务实时状态与历史图表。</div>
+        <div class="project-tags">
+            <span class="tag">HTML/JS</span>
+            <span class="tag">图表</span>
+            <span class="tag">计划中</span>
+        </div>
+        <a href="#" class="project-link">即将上线</a>
+    </div>
+
+    <!-- Gemini 中转 API 卡片 -->
+    <div class="project-card">
+        <div class="project-title">Gemini 中转 API</div>
+        <div class="project-desc">
+            基于 <a href="https://github.com/bilibilimnb/openai-gemini" target="_blank" style="color:#2c6e9e;">openai-gemini</a> 部署在 Cloudflare Workers，提供 OpenAI 格式的 Gemini API 代理。<br>
+            配合 <strong>Chatbox</strong> 客户端即可轻松使用。
+        </div>
+        <div class="project-tags">
+            <span class="tag">Gemini API</span>
+            <span class="tag">OpenAI兼容</span>
+            <span class="tag">Cloudflare Worker</span>
+        </div>
+        <div style="background:#fafcff; border-radius:1rem; padding:0.75rem; margin:0.5rem 0;">
+            <div style="font-size:0.8rem; font-weight:500; margin-bottom:0.5rem;">⚙️ 使用步骤</div>
+            <ol style="font-size:0.75rem; color:#4a5a72; padding-left:1.2rem; margin:0; line-height:1.4;">
+                <li>下载 <a href="https://chatboxai.app/zh/" target="_blank" style="color:#2c6e9e;">Chatbox 客户端</a>（免费，支持 Win/Mac/Linux/手机）</li>
+                <li>设置 → 选择“OpenAI API”类型</li>
+                <li>API 地址填入：<code style="background:#eef3fc; padding:0.1rem 0.3rem; border-radius:4px;">https://gemini.awa486.top/v1</code></li>
+                <li>API 密钥填入你的 <a href="https://aistudio.google.com/apikey" target="_blank" style="color:#2c6e9e;">Google AI Studio 密钥</a></li>
+                <li>选择模型（如 gemini-2.0-flash-exp）开始聊天</li>
+            </ol>
+        </div>
+        <a href="https://github.com/bilibilimnb/openai-gemini" class="project-link" target="_blank">查看源码 →</a>
+    </div>
+</div>

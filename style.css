@@ -1,0 +1,244 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f6f8fc;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+    color: #1f2a3e;
+    line-height: 1.5;
+    scroll-behavior: smooth;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.navbar {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #5a6e85;
+}
+
+.profile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 3rem;
+    background: white;
+    border-radius: 2rem;
+    padding: 2rem;
+    border: 1px solid #eef2f6;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background-color: #eef3fc;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #0f2b3d;
+}
+
+.info .bio {
+    color: #475569;
+    margin-bottom: 1rem;
+    max-width: 550px;
+}
+
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: #2c6e9e;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.social-links a:hover {
+    color: #1e4a6e;
+}
+
+.section-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 2rem 0 1.2rem 0;
+    color: #1e2f41;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.project-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+    border: 1px solid #eef2f6;
+}
+
+.project-card:hover {
+    transform: translateY(-2px);
+    border-color: #dce5ed;
+    box-shadow: 0 12px 20px -12px rgba(0,0,0,0.08);
+}
+
+.project-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1f2a44;
+}
+
+.project-desc {
+    color: #4a5a72;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.tag {
+    background: #eef3fc;
+    color: #2c6e9e;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+}
+
+.project-link {
+    text-decoration: none;
+    color: #2c6e9e;
+    font-weight: 500;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.line-status-list {
+    margin: 1rem 0;
+    background: #fafcff;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+.line-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.4rem;
+    border-bottom: 1px solid #eef2f6;
+    font-size: 0.85rem;
+}
+
+.line-item:last-child {
+    border-bottom: none;
+}
+
+.line-name {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.line-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.line-dot.online {
+    background-color: #2c9c6e;
+    box-shadow: 0 0 0 2px rgba(44,156,110,0.2);
+}
+
+.line-dot.offline {
+    background-color: #c25a4a;
+    box-shadow: 0 0 0 2px rgba(194,90,74,0.2);
+}
+
+.line-status-text {
+    font-weight: 500;
+    margin-left: 0.25rem;
+}
+
+.line-online .line-status-text {
+    color: #2c6e4e;
+}
+
+.line-offline .line-status-text {
+    color: #b84c3c;
+}
+
+.line-time {
+    font-size: 0.7rem;
+    color: #8aa2be;
+}
+
+.footer {
+    border-top: 1px solid #e2edf2;
+    padding: 2rem 0;
+    margin-top: 2rem;
+    text-align: center;
+    color: #5a6e85;
+    font-size: 0.75rem;
+}
+
+@media (max-width: 700px) {
+    .profile {
+        flex-direction: column;
+        text-align: center;
+    }
+    .avatar {
+        margin: 0 auto;
+    }
+    .social-links {
+        justify-content: center;
+    }
+    .line-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+}
