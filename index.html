@@ -1,37 +1,46 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>推gal好累 · 个人主页</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <div id="header-placeholder"></div>
-        <div id="profile-placeholder"></div>
-        <h2 class="section-title">项目 · 作品</h2>
-        <div id="projects-placeholder"></div>
-        <div id="footer-placeholder"></div>
-    </div>
+<script>
+    async function loadPart(selector, file) {
+        try {
+            const res = await fetch(file);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const html = await res.text();
 
-    <script src="parts/openlist-status.js"></script>
-    <script>
-        async function loadPart(selector, file) {
-            try {
-                const res = await fetch(file);
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const html = await res.text();
-                document.querySelector(selector).innerHTML = html;
-            } catch (err) {
-                console.error(`加载 ${file} 失败:`, err);
-            }
+            // 创建一个临时容器，用于解析 HTML
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = html;
+
+            // 提取所有 <script> 标签，稍后执行
+            const scripts = wrapper.querySelectorAll('script');
+            const scriptContents = [];
+            scripts.forEach(script => {
+                if (script.src) {
+                    // 外部脚本：动态加载
+                    const src = script.src;
+                    scriptContents.push(() => {
+                        const newScript = document.createElement('script');
+                        newScript.src = src;
+                        document.body.appendChild(newScript);
+                    });
+                } else {
+                    // 内联脚本：保存内容
+                    scriptContents.push(new Function(script.textContent));
+                }
+                script.remove(); // 移除原 script 标签，避免重复执行
+            });
+
+            // 插入 HTML 内容（不含 script 标签）
+            document.querySelector(selector).innerHTML = wrapper.innerHTML;
+
+            // 执行所有脚本
+            scriptContents.forEach(fn => fn());
+        } catch (err) {
+            console.error(`加载 ${file} 失败:`, err);
         }
+    }
 
-        loadPart('#header-placeholder', 'parts/header.html');
-        loadPart('#profile-placeholder', 'parts/profile.html');
-        loadPart('#projects-placeholder', 'parts/projects.html');
-        loadPart('#footer-placeholder', 'parts/footer.html');
-    </script>
-</body>
-</html>
+    // 加载各个模块
+    loadPart('#header-placeholder', 'parts/header.html');
+    loadPart('#profile-placeholder', 'parts/profile.html');
+    loadPart('#projects-placeholder', 'parts/projects.html');
+    loadPart('#footer-placeholder', 'parts/footer.html');
+</script>
