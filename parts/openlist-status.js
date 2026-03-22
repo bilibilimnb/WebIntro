@@ -51,5 +51,16 @@ async function fetchAndUpdateLines() {
     }
 }
 
-fetchAndUpdateLines();
-setInterval(fetchAndUpdateLines, 60000);
+// 导出到全局，以便 index.html 可以主动调用
+window.fetchAndUpdateLines = fetchAndUpdateLines;
+
+// 页面加载后自动执行一次（当 DOM 包含 #lineStatusList 时）
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchAndUpdateLines();
+        setInterval(fetchAndUpdateLines, 60000);
+    });
+} else {
+    fetchAndUpdateLines();
+    setInterval(fetchAndUpdateLines, 60000);
+}
