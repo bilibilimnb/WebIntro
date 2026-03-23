@@ -242,3 +242,35 @@ body {
         gap: 0.4rem;
     }
 }
+
+/* 社交图标按钮区域 */
+.social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #eef3fc;
+    color: #2c6e9e;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    background-color: #dce8f2;
+    color: #1e5a7e;
+    transform: scale(1.05);
+}
+
+.social-icon svg {
+    width: 20px;
+    height: 20px;
+}
