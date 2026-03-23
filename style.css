@@ -243,11 +243,10 @@ body {
     }
 }
 
-/* 社交图标按钮区域 */
 .social-icons {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.8rem;
+    gap: 1rem;
     margin-top: 0.8rem;
 }
 
@@ -255,22 +254,22 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background-color: #eef3fc;
-    color: #2c6e9e;
+    background-color: #f1f5f9;    /* 非常浅的暖灰 */
+    color: #5c6f87;               /* 柔和灰蓝，接近文字辅助色 */
     transition: all 0.2s ease;
     text-decoration: none;
 }
 
 .social-icon:hover {
-    background-color: #dce8f2;
-    color: #1e5a7e;
+    background-color: #e4e9f0;
+    color: #3a4e6b;
     transform: scale(1.05);
 }
 
 .social-icon svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
 }
