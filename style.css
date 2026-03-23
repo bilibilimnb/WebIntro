@@ -88,6 +88,46 @@ body {
     color: #1e4a6e;
 }
 
+/* ---------- 新社交图标样式 ---------- */
+.social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;          /* 间距加大 */
+    margin-top: 0.8rem;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;           /* 大一点 */
+    height: 48px;
+    border-radius: 50%;
+    background-color: transparent;  /* 无背景，干净 */
+    color: #5b6e8c;        /* 柔和的灰蓝色 */
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    background-color: rgba(0, 0, 0, 0.05);  /* 悬停时淡淡灰底 */
+    color: #2c6e9e;        /* 悬停时品牌蓝 */
+    transform: scale(1.05);
+}
+
+.social-icon svg {
+    width: 28px;           /* 图标尺寸加大 */
+    height: 28px;
+}
+
+/* 确保链接不会变成默认的蓝紫色 */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+/* 以上覆盖了全局链接颜色，不影响项目卡片内的链接，因为卡片内的 a 有 .project-link 类覆盖了颜色 */
+/* ----------------------------------- */
+
 .section-title {
     font-size: 1.6rem;
     font-weight: 600;
@@ -241,35 +281,4 @@ body {
         align-items: flex-start;
         gap: 0.4rem;
     }
-}
-
-.social-icons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 0.8rem;
-}
-
-.social-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background-color: #f1f5f9;    /* 非常浅的暖灰 */
-    color: #5c6f87;               /* 柔和灰蓝，接近文字辅助色 */
-    transition: all 0.2s ease;
-    text-decoration: none;
-}
-
-.social-icon:hover {
-    background-color: #e4e9f0;
-    color: #3a4e6b;
-    transform: scale(1.05);
-}
-
-.social-icon svg {
-    width: 24px;
-    height: 24px;
 }
