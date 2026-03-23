@@ -92,7 +92,7 @@ body {
 .social-icons {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.2rem;          /* 间距加大 */
+    gap: 0.8rem;          /* 合适的间距 */
     margin-top: 0.8rem;
 }
 
@@ -100,23 +100,22 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 48px;           /* 大一点 */
+    width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: transparent;  /* 无背景，干净 */
-    color: #5b6e8c;        /* 柔和的灰蓝色 */
+    background-color: transparent;
+    color: #5b6e8c;
     transition: all 0.2s ease;
-    text-decoration: none;
 }
 
 .social-icon:hover {
-    background-color: rgba(0, 0, 0, 0.05);  /* 悬停时淡淡灰底 */
-    color: #2c6e9e;        /* 悬停时品牌蓝 */
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #2c6e9e;
     transform: scale(1.05);
 }
 
 .social-icon svg {
-    width: 28px;           /* 图标尺寸加大 */
+    width: 28px;
     height: 28px;
 }
 
