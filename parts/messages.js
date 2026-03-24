@@ -69,6 +69,7 @@ function escapeHtml(str) {
     });
 }
 
+// 自动执行（备用）
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         loadMessages();
