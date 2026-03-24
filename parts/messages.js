@@ -1,10 +1,8 @@
-const API_BASE = 'https://api.awa486.top';
-
 async function loadMessages() {
     const container = document.getElementById('messages-list');
     if (!container) return;
     try {
-        const res = await fetch(`${API_BASE}/messages`);
+        const res = await fetch(`${window.API_BASE}/messages`);
         if (!res.ok) throw new Error('加载失败');
         const messages = await res.json();
         if (!messages.length) {
@@ -44,7 +42,7 @@ async function submitMessage() {
     btn.disabled = true;
     btn.innerText = '发送中…';
     try {
-        const res = await fetch(`${API_BASE}/messages`, {
+        const res = await fetch(`${window.API_BASE}/messages`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, content }),

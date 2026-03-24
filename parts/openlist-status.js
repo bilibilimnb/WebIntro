@@ -1,4 +1,4 @@
-const API_BASE = 'https://api.awa486.top';   // 新 API 底座
+window.API_BASE = 'https://api.awa486.top';
 
 const lineMapping = {
     'drive.awa486.top': {
@@ -18,7 +18,7 @@ async function fetchAndUpdateLines() {
     if (!container) return;
 
     try {
-        const res = await fetch(`${API_BASE}/status`);
+        const res = await fetch(`${window.API_BASE}/status`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
 
