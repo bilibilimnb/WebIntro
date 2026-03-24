@@ -1,3 +1,5 @@
+const API_BASE = 'https://api.awa486.top';   // 新 API 底座
+
 const lineMapping = {
     'drive.awa486.top': {
         name: 'SakuraFrp',
@@ -9,12 +11,14 @@ const lineMapping = {
     }
 };
 
+let ipv6Supported = null;
+
 async function fetchAndUpdateLines() {
     const container = document.getElementById('lineStatusList');
     if (!container) return;
 
     try {
-        const res = await fetch('https://status.awa486.top/status');
+        const res = await fetch(`${API_BASE}/status`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
 
@@ -30,6 +34,18 @@ async function fetchAndUpdateLines() {
             const statusText = online ? '在线' : '离线';
             const rt = site.responseTime !== undefined ? `${site.responseTime}ms` : '—';
             const line = lineMapping[site.name];
+
+            let linkHtml;
+            if (site.name === 'v6.awa486.top') {
+                if (ipv6Supported === false) {
+                    linkHtml = `<span style="font-size:0.7rem; color:#aaa; text-decoration:none;">访问 →</span>`;
+                } else {
+                    linkHtml = `<a href="${line.url}" target="_blank" style="font-size:0.7rem; color:#2c6e9e; text-decoration:none;">访问 →</a>`;
+                }
+            } else {
+                linkHtml = `<a href="${line.url}" target="_blank" style="font-size:0.7rem; color:#2c6e9e; text-decoration:none;">访问 →</a>`;
+            }
+
             return `
                 <div class="line-item">
                     <div class="line-name">
@@ -39,7 +55,7 @@ async function fetchAndUpdateLines() {
                     <div class="line-time">
                         ${statusText} · ${rt}
                     </div>
-                    <a href="${line.url}" target="_blank" style="font-size:0.7rem; color:#2c6e9e; text-decoration:none;">访问 →</a>
+                    ${linkHtml}
                 </div>
             `;
         }).join('');
@@ -51,16 +67,52 @@ async function fetchAndUpdateLines() {
     }
 }
 
-// 导出到全局，以便 index.html 可以主动调用
-window.fetchAndUpdateLines = fetchAndUpdateLines;
+function checkIPv6Support() {
+    const dot = document.querySelector('#ipv6-status .ipv6-dot');
+    const textSpan = document.getElementById('ipv6-text');
+    if (!dot || !textSpan) return;
 
-// 页面加载后自动执行一次（当 DOM 包含 #lineStatusList 时）
+    const testUrl = 'http://[240e:97c:2f:1::68]:80/';
+
+    fetch(testUrl, { mode: 'no-cors' })
+        .then(() => {
+            ipv6Supported = true;
+            dot.style.backgroundColor = '#2c9c6e';
+            textSpan.innerHTML = '✅ IPv6 网络可达';
+            const existingTip = textSpan.parentNode.querySelector('.ipv6-tip');
+            if (existingTip) existingTip.remove();
+        })
+        .catch((err) => {
+            console.warn('IPv6 检测失败:', err);
+            ipv6Supported = false;
+            dot.style.backgroundColor = '#c25a4a';
+            textSpan.innerHTML = '❌ 您当前环境不支持 IPv6 网站访问';
+
+            let tipSpan = textSpan.parentNode.querySelector('.ipv6-tip');
+            if (!tipSpan) {
+                tipSpan = document.createElement('span');
+                tipSpan.style.display = 'block';
+                tipSpan.style.color = '#e68a2e';
+                tipSpan.style.fontSize = '0.7rem';
+                tipSpan.style.marginTop = '0.2rem';
+                tipSpan.innerText = '您当前环境不支持 IPv6 网站访问';
+                tipSpan.className = 'ipv6-tip';
+                textSpan.parentNode.appendChild(tipSpan);
+            }
+        })
+        .finally(() => {
+            fetchAndUpdateLines();
+        });
+}
+
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        fetchAndUpdateLines();
+        checkIPv6Support();
         setInterval(fetchAndUpdateLines, 60000);
     });
 } else {
-    fetchAndUpdateLines();
+    checkIPv6Support();
     setInterval(fetchAndUpdateLines, 60000);
 }
+
+window.fetchAndUpdateLines = fetchAndUpdateLines;

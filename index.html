@@ -12,34 +12,12 @@
         <div id="profile-placeholder"></div>
         <h2 class="section-title">项目 · 作品</h2>
         <div id="projects-placeholder"></div>
+        <div id="message-board-placeholder"></div>
         <div id="footer-placeholder"></div>
     </div>
 
     <script src="parts/openlist-status.js"></script>
-    <script>
-        async function loadPart(selector, file) {
-            try {
-                const res = await fetch(file);
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const html = await res.text();
-                document.querySelector(selector).innerHTML = html;
-            } catch (err) {
-                console.error(`加载 ${file} 失败:`, err);
-            }
-        }
-
-        // 使用 Promise.all 等待所有部分加载完成
-        Promise.all([
-            loadPart('#header-placeholder', 'parts/header.html'),
-            loadPart('#profile-placeholder', 'parts/profile.html'),
-            loadPart('#projects-placeholder', 'parts/projects.html'),
-            loadPart('#footer-placeholder', 'parts/footer.html')
-        ]).then(() => {
-            // 所有部分加载完成后，手动触发一次线路状态更新
-            if (typeof fetchAndUpdateLines === 'function') {
-                fetchAndUpdateLines();
-            }
-        });
-    </script>
+    <script src="parts/messages.js"></script>
+    <script src="parts/loader.js"></script>
 </body>
 </html>

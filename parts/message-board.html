@@ -1,0 +1,12 @@
+<div class="project-card" style="margin-top: 2rem;">
+    <div class="project-title">💬 留言板</div>
+    <div class="project-desc">留下你想说的话（昵称最多20字，留言最多5000字）</div>
+    <div id="message-form" style="margin: 1rem 0;">
+        <input type="text" id="msg-name" placeholder="昵称" maxlength="20" style="width: 30%; padding: 0.5rem; margin-right: 0.5rem; border: 1px solid #cddfef; border-radius: 20px;">
+        <input type="text" id="msg-content" placeholder="留言内容" maxlength="5000" style="width: 60%; padding: 0.5rem; margin-right: 0.5rem; border: 1px solid #cddfef; border-radius: 20px;">
+        <button id="submit-msg" class="btn-primary" style="padding: 0.4rem 1rem; border-radius: 20px;">发送</button>
+    </div>
+    <div id="messages-list" style="max-height: 300px; overflow-y: auto;">
+        <div style="color:#6f8fae; text-align:center; padding:1rem;">加载留言中…</div>
+    </div>
+</div>

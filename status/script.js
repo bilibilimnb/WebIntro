@@ -1,5 +1,5 @@
 // API 底座地址
-const WORKER_BASE = 'https://status.awa486.top';
+const WORKER_BASE = 'https://api.awa486.top';
 
 let autoRefreshTimer = null;
 let rtChart = null;
